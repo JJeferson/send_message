@@ -15,9 +15,10 @@ import java.util.List;
 public class SendedLog {
     String ID;
     LocalDateTime logDateTime;
+    String message;
     String name;
     String email;
     Integer phone;
-    List<Category> Subscribed;
-    List<NotificationType> Channels;
+    Category Subscribed;
+    NotificationType Channels;
 }

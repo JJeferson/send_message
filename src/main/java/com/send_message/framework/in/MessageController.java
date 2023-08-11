@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/send_message")
+@RequestMapping(value = "/send")
 public class MessageController {
     @Autowired
     SendMessageUseCaseImpl service;
 
-    @CacheEvict(value = "/nova_nota", allEntries = true)
-    @PostMapping("/nova_nota")
+    @CacheEvict(value = "/message", allEntries = true)
+    @PostMapping("/message")
     public ResponseEntity<String> novaNota(@RequestBody MessageRecived messageRecived)
     {
         var response = service.ConvertAndSend(messageRecived);

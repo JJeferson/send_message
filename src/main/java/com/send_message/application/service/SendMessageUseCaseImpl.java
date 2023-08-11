@@ -1,7 +1,9 @@
 package com.send_message.application.service;
 
+import com.send_message.application.config.controller_advice.exceptions.BadGatewayException;
 import com.send_message.application.in.SendMessageUseCase;
 import com.send_message.application.mapper.MessageRecivedToSendMessage;
+import com.send_message.application.validation.MessageRecivedValidate;
 import com.send_message.domain.MessageRecived;
 import com.send_message.domain.enums.NotificationType;
 import com.send_message.framework.out.SendMessageEmail;
@@ -14,22 +16,28 @@ import org.springframework.stereotype.Service;
 public class SendMessageUseCaseImpl implements SendMessageUseCase {
     @Autowired
     private MessageRecivedToSendMessage mapper;
+    @Autowired
+    private MessageRecivedValidate validation;
+    @Autowired
+    SendMessageEmail sendMessageEmail;
+    @Autowired
+    SendMessagePush sendMessagePush;
+    @Autowired
+    SendMessageSMS sendMessageSMS;
+
 
     @Override
     public String ConvertAndSend(MessageRecived message) {
-
+        validation.validate(message);
         if(message.getNotificationType().equals(NotificationType.Email)) {
-            SendMessageEmail sendMessageEmail = new SendMessageEmail();
             return sendMessageEmail.sendMessage(mapper.convert(message));
         }
         if(message.getNotificationType().equals(NotificationType.Push)) {
-            SendMessagePush sendMessagePush = new SendMessagePush();
             return sendMessagePush.sendMessage(mapper.convert(message));
         }
         if(message.getNotificationType().equals(NotificationType.SMS)) {
-            SendMessageSMS sendMessageSMS = new SendMessageSMS();
             return sendMessageSMS.sendMessage(mapper.convert(message));
         }
-        return "ERROR: Notification type informed is incorrect";
+        throw new BadGatewayException("Problem with the Notification Type informed");
     }
 }
