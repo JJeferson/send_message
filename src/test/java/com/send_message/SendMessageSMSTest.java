@@ -42,14 +42,13 @@ public class SendMessageSMSTest {
                 .notificationType(NotificationType.SMS)
                 .message("Test message")
                 .category(Category.Films)
-                .users(List.of(User.builder().ID("123").name("User1").build()))
+                .user(User.builder().ID("123").name("User1").build())
                 .build();
 
         when(mapper.convert(any(), any(), any(), any())).thenReturn(SendedLog.builder().build());
 
-        String response = sendMessageSMS.sendMessage(message);
+       sendMessageSMS.sendMessage(message);
 
-        assertEquals("Message SMS sended for 1 users.", response);
         verify(mapper, times(1)).convert(any(), any(), any(), any());
         verify(log, times(1)).save(any());
     }

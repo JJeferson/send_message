@@ -16,6 +16,6 @@ public class SendMessage {
     Category category;
     NotificationType notificationType;
     LocalDateTime logDateTime;
-    List<User> users;
+    User user;
     String message;
 }

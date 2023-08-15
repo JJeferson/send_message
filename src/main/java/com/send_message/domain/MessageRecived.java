@@ -12,5 +12,4 @@ import lombok.Setter;
 public class MessageRecived {
     String message;
     Category category;
-    NotificationType notificationType;
 }

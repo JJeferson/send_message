@@ -1,13 +1,17 @@
 package com.send_message.application.validation;
 
 import com.send_message.application.config.controller_advice.exceptions.BadGatewayException;
+import com.send_message.application.config.controller_advice.exceptions.NotFoundException;
 import com.send_message.domain.MessageRecived;
+import com.send_message.domain.User;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class MessageRecivedValidate   {
 
-    public void validate(MessageRecived messageRecived) {
+    public void validateMessageRecived(MessageRecived messageRecived) {
 
         if (messageRecived.getMessage() == null || messageRecived.getMessage().isEmpty()) {
             throw new BadGatewayException("Message field cannot be empty");
@@ -17,8 +21,11 @@ public class MessageRecivedValidate   {
             throw new BadGatewayException("Category field cannot be null");
         }
 
-        if (messageRecived.getNotificationType() == null) {
-            throw new BadGatewayException("NotificationType field cannot be null");
+    }
+
+    public void validateUserList(List<User> users){
+        if(users == null || users.isEmpty()){
+            throw new NotFoundException("No client found for sending messages.");
         }
     }
 

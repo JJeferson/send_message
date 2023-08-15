@@ -10,8 +10,10 @@ import java.util.List;
 
 
 public interface UserRepository extends MongoRepository<User,String> {
-    @Query("{'Channels': ?0, 'Subscribed': ?1}")
-    List<User> findDistinctByChannelsAndSubscribed(NotificationType channel, Category subscribed);
+
+
+    @Query("{'Subscribed': ?0}")
+    List<User> findBySubscribedContaining(Category category);
 
 }
 

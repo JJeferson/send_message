@@ -25,7 +25,6 @@ public class Controller {
         @Test
         public void testNovaNota() {
            var mock = MessageRecived.builder()
-                    .notificationType(NotificationType.Email)
                     .message("123")
                     .category(Category.Films)
                     .build();

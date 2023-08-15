@@ -21,31 +21,13 @@ public class MessageRecivedToSendMessage {
     @Autowired
     UserRepository userRepository;
 
-    public SendMessage convert(MessageRecived messageRecived){
+    public SendMessage convert(MessageRecived messageRecived, User user){
         return SendMessage.builder()
                 .message(messageRecived.getMessage())
                 .category(messageRecived.getCategory())
-                .notificationType(messageRecived.getNotificationType())
                 .logDateTime(LocalDateTime.now())
-                .users(getDistinctUsers(userRepository.findDistinctByChannelsAndSubscribed(
-                        messageRecived.getNotificationType(),messageRecived.getCategory())))
+                .user(user)
                 .build();
     }
 
-    public List<User> getDistinctUsers(List<User> users) {
-        if(users == null || users.isEmpty()){
-            throw new NotFoundException("No client found for sending messages.");
-        }
-        Set<String> userIds = new HashSet<>();
-        List<User> distinctUsers = new ArrayList<>();
-
-        for (User user : users) {
-            if (!userIds.contains(user.getID())) {
-                userIds.add(user.getID());
-                distinctUsers.add(user);
-            }
-        }
-
-        return distinctUsers;
-    }
 }

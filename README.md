@@ -5,6 +5,7 @@ Here specifications: <a href="BackEndNotificationAPIs_GS.pdf"> Here </a> </br>
 * Spring Boot
 * Mockito / Junit (Unit Tests)
 * Hexagonal Architecture
+* Design Patter Strategy used for select the notification type
 * Controller Advice
 * MongoDB (Mock and Logs)
 
@@ -20,9 +21,9 @@ curl --location --request POST 'http://localhost:8080/send/message' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "message":"teste",
-    "category":"films",
-    "notificationType":"email"
+    "category":"finance"
 }'
+
 ```
 All classes have been tested. </br>
 <img src="unit_tests.jpg"> </br>
